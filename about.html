@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+	<link href="about.css" rel="stylesheet">
+	<link href='http://fonts.googleapis.com/css?family=Maven+Pro' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
+		<!-- JQuery -->
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="js/jssor.js"></script>
+    <script type="text/javascript" src="js/jssor.slider.js"></script>
+	<title>Three Sheets to GIS - About</title>
+  </head>
+    
+  <body>
+    <div class="content">
+		<div id="title">Three Sheets to GIS</div>
+    </div>
+	<div id="About" align="center">About</div>
+	
+	<div id="paragraphs">
+			
+		<div class="paragraph1">
+		
+		<p><b><u>INTRODUCTION:</u></b></p>
+		<ul type="none">
+		<li>"Three Sheets" is a dedicated travelogue and comedic series where host Zane Lamprey visits and samples local food and enjoys alcoholic-related customs that highlight native beverages around the world. Each location is defined by its unique traditions and  folklore. As the title suggests, as the episode progresses the characters become increasingly three sheets to the wind.</li>
+		<br>
+		<li>As Masters of Geographic Information Science students, we wanted to bring a geographic approach to watching travel themed shows. Our idea was to provide an interactive geographic visualization of where the episodes of the show "Three Sheets" took place, allowing viewers to easily select episodes based on location instead of season and episode number.</li>
+		<br>
+		<li>We like to add new people to the Three Sheets following, usually by sitting down and watching an episode filmed where our friends are from or  a place that interests them. Our website allows for easy episode selection based on geography, for new and dedicated followers alike.</li>
+		</ul>
+		</div>
+						
+  		<div class="paragraph2">
+			
+			<p><b><u>MAP GALLERY:</u></b></p>
+			<ul type="none">
+				<li>This map gallery displays different regional maps that represent the various locations where the show was filmed.</li> <br>
+				<li>The maps for the following regions are present in the map gallery and in the order listed.</li> <br>
+				<li>1. North America and Northern South America</li> <br>
+				<li>2. Southern South America</li> <br>
+				<li>3. Europe</li> <br>
+				<li>4. Asia</li> <br>
+				<li>5. The Pacific Islands</li> <br>
+				<li>6. Africa</li> <br>
+			</ul>
+		</div>
+			
+		<script>
+			jQuery(document).ready(function ($) {
+				var options = {
+
+					$AutoPlay: true,                                   //[Optional] Whether to auto play, to enable slideshow, this option must be set to true, default value is false
+					$DragOrientation: 3                                //[Optional] Orientation to drag slide, 0 no drag, 1 horizental, 2 vertical, 3 either, default value is 1 (Note that the $DragOrientation should be the same as $PlayOrientation when $DisplayPieces is greater than 1, or parking position is not 0)
+				};
+
+				var jssor_slider1 = new $JssorSlider$("slider1_container", options);
+			});
+		</script>
+			
+		<div id="slider1_container" style="position: relative; display: inline-block; width: 600px; height: 800px; margin-left: 20px; margin-right: 3%;">
+			<!-- Slides Container -->
+			<div u="slides" style="cursor: move; position: relative; left: 50px; top: 0px; width: 600px; height: 800px; overflow: hidden;">
+				<div><img u="image" src="assets/images/america.jpg" /></div>
+				<div><img u="image" src="assets/images/southamerica.jpg" /></div>
+				<div><img u="image" src="assets/images/europe.jpg" /></div>
+				<div><img u="image" src="assets/images/asia.jpg" /></div>
+				<div><img u="image" src="assets/images/pacific.jpg" /></div>
+				<div><img u="image" src="assets/images/africa.jpg" /></div>
+			</div>
+			<a style="display: none" href="http://www.jssor.com">javascript</a>
+		</div>
+			
+		<div class="paragraph1"><p><b><u>LESSONS LEARNED:</p></u></b>
+		<ul type="none">
+			<li>We became well versed with concepts of HTML and CSS. We understood how the language worked and also learned about several features of the language.</li>
+			<br>
+			<li>We picked up some JavaScript skills, mostly related to the web mapping. We worked with a few of them and realized how powerful the web mapping JavaScript APIs were. Furthermore, the plethora of spatial-related functions allowed us to customize our map. We used Leaflet to build our ineractive map, it's such an amazing tool to work with!</li>
+			<br>
+			<li>We also learned a little bit of jquery and bootstrap, even though they were used for very specific functions. We would like to improve our knowledge over time.</li>
+		</ul>
+		</div>
+		
+		<div class="paragraph1"><p><b><u>IF THERE WAS MORE TIME:</u></b></p> 
+		<ul type="none">
+			<li>We would incorporate a WMS at a global scale. The potential WMS viewed were of topics unrelated to our topic as well as being too large in size and required tiling.</li>
+			<br>
+			<li>Ideally, we would like the links in the pop-up windows to open in a new tab. We were able to accomplish this in our metadata section, but the way the markers were read in, would not allow us to do this.</li>
+			<br>
+			<li>Furthermore, improving the interface by adding more stylistic elements and improving interactivity is another component we would like to implement.</li>
+			<br>
+			<li>In addition, we would like to make our website suitable for a mobile platform.</li>
+		</ul>
+		</div>
+		<div class="paragraph1"><p><b><u>RESOURCES AND EXPERIENCE WITH PROGRAMMING:</u></b></p> 
+		<ul type="none">
+			<li>Programming is a recent resource for our group. Each group member is a beginner in web development and the coding languages and markup languages involved are new. </li>
+			<br>
+			<li>Collectively, we have some previous experience learning the basics of python.</li>
+			<br>
+			<li>To become familiar with HTML, CSS, and javascript, we practiced coding using Code Academy and W3Schools. In addition, we referenced leaflet tutorials for basic web-mapping and plug-ins for complex functions.</li>
+		</ul>
+		</div>
+								
+	</div>
+			
+<hr>	
+	
+	<div id="links" align="center">
+		<div class="homestyle">
+		<div class="homestyle" style="align:center"><a href="index.html">Home</a></div>
+		<div class="homestyle" style="align:center"><a href="about.html">About</a></div>
+		<div class="homestyle" style="align:center"><a href="metadata.html">Metadata</a></div>
+		</div>
+	</div> 
+	
+<hr>
+
+</body>
+
+<footer>
+    <div class="footer">
+      Copyright 2014 by Shoumith Jeyakumar, Jennifer Reinke, Andrew Reicks, Jason Dally - University of Minnesota, Twin Cities. 
+    </div>
+</footer>
+
+</html>

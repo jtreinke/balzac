@@ -1,0 +1,143 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "SID": 12870,
+        "Name": "La Seine",
+        "Type": "Standing Stone (Menhir)",
+        "Colour": "Our Photo Page",
+        "Accuracy": 5,
+        "Condition": 5,
+        "Ambience": 4,
+        "Access": 2,
+        "TypeID": 21,
+        "CatID": 1,
+        "Icon": "tr21"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.360964,
+          48.848411
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "SID": 35353,
+        "Name": "Freylay",
+        "Type": "Polissoir",
+        "Colour": "Text Page",
+        "Accuracy": 3,
+        "Condition": 0,
+        "Ambience": 0,
+        "Access": 3,
+        "TypeID": 66,
+        "CatID": 2,
+        "Icon": "tg66"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.217279,
+          49.728037
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "SID": 31796,
+        "Name": "Mamerlach",
+        "Type": "Cave or Rock Shelter",
+        "Colour": "Text Page",
+        "Accuracy": 3,
+        "Condition": 3,
+        "Ambience": 4,
+        "Access": 3,
+        "TypeID": 35,
+        "CatID": 2,
+        "Icon": "tg35"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.094856,
+          49.733815
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "SID": 31795,
+        "Name": "Mamerlayen",
+        "Type": "Ancient Mine, Quarry or other Industry",
+        "Colour": "Text Page",
+        "Accuracy": 3,
+        "Condition": 4,
+        "Ambience": 4,
+        "Access": 3,
+        "TypeID": 31,
+        "CatID": 2,
+        "Icon": "tg31"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.094458,
+          49.72437
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "SID": 34622,
+        "Name": "Vicus Ricciaco",
+        "Type": "Ancient Village or Settlement",
+        "Colour": "Text Page",
+        "Accuracy": 4,
+        "Condition": 0,
+        "Ambience": 0,
+        "Access": 5,
+        "TypeID": 2,
+        "CatID": 2,
+        "Icon": "tg2"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.256665,
+          49.539563
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "SID": 31794,
+        "Name": "Wichtelslee",
+        "Type": "Hillfort",
+        "Colour": "Text Page",
+        "Accuracy": 3,
+        "Condition": 0,
+        "Ambience": 0,
+        "Access": 0,
+        "TypeID": 13,
+        "CatID": 2,
+        "Icon": "tg13"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.078062,
+          49.726376
+        ]
+      }
+    }
+  ]
+}

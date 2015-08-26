@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="sheets.css" rel="stylesheet">
+  <link href='https://api.tiles.mapbox.com/mapbox.js/v2.2.1/mapbox.css' rel='stylesheet' />
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"/><!--JQuery-ui.css (for time slider)
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script> <!-- JQuery -->
+  <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script><!-- JQuery -->
+  <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script><!--JQuery-ui.js (for time slider)-->
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.4/esri-leaflet.js"></script> <!-- ESRI Basemaps -->
+  <!--<script src="leaflet.geocsv.js"></script>--><!--for adding markers, converting csv to geojson-->
+  <script src="leaflet_map.js"></script>
+  <script src="SliderControl.js"></script>
+  
+  <title>Mapping Balzac's Paris</title>
+  </head>
+    
+  <body>
+
+
+    <div id="title">Mapping Balzac's Paris</div>
+  
+    <div id="map"></div>
+   
+
+    
+  
+    <script>
+
+      // adding Streets layer from mapbox                     
+      var streets = L.tileLayer('http://{s}.tiles.mapbox.com/v3/jtreinke.mo6k9ic3/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>',
+        maxZoom: 18
+        }),
+      
+      // adding Basemaps from ESRI
+         satellite = L.esri.basemapLayer("Imagery")
+        
+      var balzacUrl = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/balzac_Reduction_FrenchMap_tiff/MapServer";
+
+       var wms = L.esri.tiledMapLayer(balzacUrl, {
+        // you can set options here
+      });
+
+
+      var map = L.map('map', {
+        center: [48.854, 2.344],
+        zoom: 15,
+        layers: [satellite, streets]
+        });
+              
+      var baseMaps = {
+        "Satellite Imagery": satellite,
+        "Streets":streets
+        //"Balzac": wms//
+        };
+      
+      var overlays = {
+        "Balzac Map": wms
+        }; 
+
+      
+      L.control.layers(baseMaps, overlays).addTo(map);//can remove basemaps to have balzac as the only option//
+      
+//Adding Character line and points from the U-Spatial ArcGIS Server
+	var chagrin = "http://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/characters_zoomLevels_test1/MapServer";
+
+	var goriot = "http://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/characters_zoomLevels_test1/MapServer";
+
+	var illusions = "http://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/characters_zoomLevels_test1/MapServer";
+
+	var chagrin_all = L.esri.dynamicMapLayer(chagrin, {
+  	opacity : 0.99,
+  	layers: [1,2,8,9,15,16],
+	}).addTo(map);
+
+	var goriot_all = L.esri.dynamicMapLayer(goriot, {
+  	opacity : 0.99,
+  	layers: [3,4,10,11,17,18],
+	}).addTo(map);
+
+  goriot_all.query()
+    .layer(3)
+    .run(function(error,featureCollection,response){
+      var geoj = new L.geoJson(featureCollection);
+        var sliderControl = L.control.sliderControl({
+         position: "topright",
+         layer: geoj,
+         follow: true
+       });
+         map.addControl(sliderControl);
+    sliderControl.startSlider();
+  });
+
+    
+	var illusions_all = L.esri.dynamicMapLayer(goriot, {
+  	opacity : 0.99,
+  	layers: [5,6,12,13,19,20],
+	}).addTo(map);
+
+	var groupOverlay = {
+		"Chagrin": chagrin_all,
+		"Goriot": goriot_all,
+		"Illusions": illusions_all
+	}
+
+  	new L.control.layers(null, groupOverlay,{
+  	 position: 'topleft',
+  	 }).addTo(map);
+  // First Attempt at CHracters and Time slider....
+  // var chagrin = "http://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/characters_zoomLevels_test1/MapServer";
+
+  // var goriot = "http://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/characters_zoomLevels_test1/MapServer";
+
+  // var illusions = "http://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/characters_zoomLevels_test1/MapServer";
+
+  // var chagrin_all = L.esri.dynamicMapLayer(chagrin, {
+  //   opacity : 0.99,
+  //   layers: [1,2,8,9,15,16],
+  // }).addTo(map);
+
+  // var goriot_all = L.esri.dynamicMapLayer(goriot, {
+  //   opacity : 0.99,
+  //   layers: [3,4,10,11,17,18],
+  // }).addTo(map);
+
+  // goriot_all.query()
+  //   .layer(3)
+  //   .run(function(error,featureCollection,response){
+  //     var geoj = new L.geoJson(featureCollection);
+  //       var sliderControl = L.control.sliderControl({
+  //        position: "topright",
+  //        layer: geoj,
+  //        follow: true
+  //      });
+  //        map.addControl(sliderControl);
+  //   sliderControl.startSlider();
+  // });
+
+    
+  // var illusions_all = L.esri.dynamicMapLayer(goriot, {
+  //   opacity : 0.99,
+  //   layers: [5,6,12,13,19,20],
+  // }).addTo(map);
+
+  // var groupOverlay = {
+  //   "Chagrin": chagrin_all,
+  //   "Goriot": goriot_all,
+  //   "Illusions": illusions_all
+  // }
+
+  //   new L.control.layers(null, groupOverlay,{
+  //    position: 'topleft',
+  //    }).addTo(map);
+  
+  //Time Slider
+
+   
+
+    // extractTimestamp: function(time, options) {
+    //     if (options.isEpoch) {
+    //         time = (new Date(parseInt(time))).toString(); // this is local time
+    //     }
+    //     return time.substr(options.startTimeIdx, options.startTimeIdx + options.timeStrLength);
+    // },
+    //    initialize: function (options) {
+    //     L.Util.setOptions(this, options);
+    //     this._layer = this.options.layer;
+
+
+</script> 
+
+</body>
+</html>
+ <!-- // var raphael = [
+      // ["la Seine",48.848411,2.360964],
+      // ["Les théâtres de vaudeville",48.871354,2.33376],
+      // ["Théâtre de l’Ambigu-Comique",48.867,2.3651],
+      // ["la rue Saint-Honoré",48.865289,2.331211]
+      // ];
+
+      // // adding custom icon as Marker     
+      // var chagrin = L.icon({
+      //   iconUrl: 'chagrin.png',
+      //   iconSize:     [80, 50], // size of the icon
+      //   iconAnchor:   [10, 10], // point of the icon which will correspond to marker's location
+      //   popupAnchor:  [10, -5] // point from which the popup should open relative to the iconAnchor
+      // });
+    
+      // raphael = L.marker([48.864632,2.337341],
+      // {icon: chagrin}).addTo(map)
+   //          .bindPopup("<strong>Medium Rocket!</strong>");
+ -->
