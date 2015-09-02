@@ -27,11 +27,7 @@
   
     <div id="map"></div>
    
-
-    
-  
-    <script>
-
+   <script>
       // adding Streets layer from mapbox                     
       var streets = L.tileLayer('http://{s}.tiles.mapbox.com/v3/jtreinke.mo6k9ic3/{z}/{x}/{y}.png', {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>',
@@ -39,21 +35,21 @@
         }),
       
       // adding Basemaps from ESRI
-         satellite = L.esri.basemapLayer("Imagery")
-        
+        satellite = L.esri.basemapLayer("Imagery")
+      
       var balzacUrl = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/balzac_Reduction_FrenchMap_tiff/MapServer";
 
-       var wms = L.esri.tiledMapLayer(balzacUrl, {
-        // you can set options here
-      });
-
-
+        //add paris map 1814
+    
       var map = L.map('map', {
         center: [48.854, 2.344],
         zoom: 15,
         layers: [satellite, streets]
         });
-              
+      
+      var wms = L.esri.tiledMapLayer(balzacUrl, {
+        // you can set options here
+      }).addTo(map);
       var baseMaps = {
         "Satellite Imagery": satellite,
         "Streets":streets
@@ -66,22 +62,40 @@
       
        L.control.layers(baseMaps, overlays, {
         position: 'topleft',
-        }).addTo(map);//can remove basemaps to have balzac as the only option//
+        }).addTo(map);
       
       
-//Adding Character line and points from the U-Spatial ArcGIS Server
+//Connecting lines and points from the U-Spatial ArcGIS Server
 	var chagrin = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/characterPoints_test2/MapServer";
 
 	var goriot = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/characterPoints_test2/MapServer";
 
 	var illusions = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/characterPoints_test2/MapServer";
 
-	var chagrin_all = L.esri.dynamicMapLayer(chagrin, {
-  	opacity : 0.99,
-  	layers: [1,4,8,12,15,18],
-	}).addTo(map);
+  var paris = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/sites_quartiers/MapServer/0";
 
-	var goriot_all = L.esri.dynamicMapLayer(goriot, {
+  var neighborhoods = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/sites_quartiers/MapServer";
+
+  //Adding character lines and points to map
+	 var neighborhoods_info = L.esri.dynamicMapLayer(neighborhoods, {
+    opacity : 0.20,
+    layers: [2],
+  });
+
+  var paris_sites = L.esri.featureLayer(paris).addTo(map);
+
+  paris_sites.bindPopup(function(feature){
+    return "<center><b>" +
+       "Location: " + feature.properties.geo + "</b><br>" +
+       feature.properties.info + "<br>"+"Acknowledgements: "+"</br>" + "</center>";
+  });
+
+  paris_sites.on("mouseover", function(e){
+    map.openPopup();
+    console.log("mouse!!!!");
+  });
+
+  var goriot_all = L.esri.dynamicMapLayer(goriot, {
   	opacity : 0.99,
   	layers: [2,5,9,11,16,19],
 	}).addTo(map);
@@ -100,22 +114,156 @@
     sliderControl.startSlider();
   });
 
-
   var illusions_all = L.esri.dynamicMapLayer(goriot, {
   	opacity : 0.99,
   	layers: [3,6,10,13,17,21],
 	}).addTo(map);
 
+  var chagrin_all = L.esri.dynamicMapLayer(chagrin, {
+    opacity : 0.99,
+    layers: [1,4,8,12,15,18],
+  }).addTo(map);
+
+  //what shows up on controller
 	var groupOverlay = {
-		"Chagrin": chagrin_all,
-		"Goriot": goriot_all,
-		"Illusions": illusions_all
+	"Eugène de Rastignac, Father Goriot": goriot_all,
+	"Lucien de Rubempré, Lost Illusions": illusions_all,
+  "Raphaël de Valentin, The Magic Skin": chagrin_all,
+  "Paris Attractions": paris_sites,
+  "Quartiers": neighborhoods_info
 	}
 
-  	new L.control.layers(null, groupOverlay,{
-  	 position: 'topleft',
-  	 collapsed: false
-  	 }).addTo(map);
+  //adding controller to map
+  new L.control.layers(null, groupOverlay,{
+  position: 'topright',
+  collapsed: false
+  }).addTo(map);
+
+  neighborhoods_info.bringToBack();
+  
+  //START OF POPUPS
+  chagrin_all.bindPopup(function (error, featureCollection) {
+    var chagrin;
+    // user click on track layer
+    if (featureCollection.features.length === 1){
+      chagrin= featureCollection.features[0].properties;
+      console.log('1: '+featureCollection.features.length)
+      popupText = "<center><b>" +
+            "Location: " + chagrin.geo + "</b><br>" +
+            "Quote: " + chagrin.plot + "</center>";
+    }
+   // user click on storm position
+    else {
+      console.log('2: '+featureCollection.features.length)
+      chagrin = featureCollection.features[1].properties;
+      
+    }
+
+    if(error || featureCollection.features.length === 0) {
+      return false;
+    } else {
+      return popupText;
+    }
+  });
+
+  
+
+  goriot_all.bindPopup(function (error, featureCollection) {
+    var goriot;
+    // user click on track layer
+    if (featureCollection.features.length === 1){
+      goriot= featureCollection.features[0].properties;
+      console.log('1: '+featureCollection.features.length)
+      popupText = "<center><b>" +
+            "Location: " + goriot.geo + "</b><br>" +
+            "Quote: " + goriot.plot + "</center>";
+    }
+
+    // user click on storm position
+    else {
+      console.log('2: '+featureCollection.features.length)
+      goriot = featureCollection.features[1].properties;
+      
+    }
+    if(error || featureCollection.features.length === 0) {
+      return false;
+    } else {
+      return popupText;
+    }
+  });
+
+ illusions_all.bindPopup(function (error, featureCollection) {
+    var illusions;
+    // user click on track layer
+    if (featureCollection.features.length === 1){
+      illusions= featureCollection.features[3,6,10,13,17,21].properties;
+      console.log('1: '+featureCollection.features.length)
+      popupText = "<center><b>" +
+            "Location: " + illusions.geo + "</b><br>" +
+            "Quote: " + illusions.plot + "</center>";
+    }
+
+    // user click on storm position
+    else {
+      console.log('2: '+featureCollection.features.length)
+      illusions= featureCollection.features[1].properties;
+      popupText = null
+    }
+    if(error || featureCollection.features.length === 0) {
+      return false;
+    } else {
+      return popupText;
+    }
+  });
+
+ // paris_sites.bindPopup(function (error, featureCollection) {
+ //    var paris;
+ //    // user click on track layer
+ //    if (featureCollection.features.length === 1){
+ //      paris= featureCollection.features[0].properties;
+ //      console.log('1: '+featureCollection.features.length)
+ //      popupText = "<center><b>" +
+ //            "Location: " + paris.geo + "</b><br>" +
+ //            paris.info + "<br>"+"Acknowledgements: "+"</br>" + "</center>";
+ //    }
+ //   // user click on storm position
+ //    else {
+ //      console.log('2: '+featureCollection.features.length)
+ //      paris = featureCollection.features[1].properties;
+      
+ //    }
+
+ //    if(error || featureCollection.features.length === 0) {
+ //      return false;
+ //    } else {
+ //      return popupText;
+ //    }
+ //  });
+
+  neighborhoods_info.bindPopup(function (error, featureCollection) {
+    var neighborhoods;
+    // user click on track layer
+    if (featureCollection.features.length === 1){
+      neighborhoods= featureCollection.features[0].properties;
+      console.log('1: '+featureCollection.features.length)
+      popupText = "<center><b>" +
+            "Arrondissement/Quartier: " + neighborhoods.L_AROFF + "</b><br>" +
+           "<b>"+"District number: "+"</b>"+ neighborhoods.L_AR + "</center>";
+    }
+   // user click on storm position
+    else {
+      console.log('2: '+featureCollection.features.length)
+      neighborhoods = featureCollection.features[1].properties;
+      
+    }
+
+    if(error || featureCollection.features.length === 0) {
+      return false;
+    } else {
+      return popupText;
+    }
+  });
+
   // First Attempt at CHracters and Time slider....
   // var chagrin = "http://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/characters_zoomLevels_test1/MapServer";
 
@@ -162,7 +310,7 @@
   //    position: 'topleft',
   //    }).addTo(map);
   
-  //Time Slider
+  // // Time Slider
 
    
 
