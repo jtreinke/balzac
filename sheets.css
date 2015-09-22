@@ -2,7 +2,7 @@ html{ font-family:'Maven Pro', sans-serif;}
 body{
   margin:-1em 0;
   padding: 0;
-  background-color:black;
+  background-color:white;
 /*the overflow thing???*/
 }
 
@@ -22,6 +22,9 @@ body{
 	display:inline-block ;
 }
 
+/*#paris{
+  padding-top:100px;
+}*/
 .leaflet-popup-content-wrapper {
   color:black;
   font-family: sans-serif;

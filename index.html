@@ -25,6 +25,7 @@
     <div style="z-index:1000000000;position:absolute;top:0;right:0;font-size:20px;"id="paris"></div>
   
     <div id="map"></div>
+    <div id="scale"></div>
    
    <script>
       // adding Streets layer from mapbox                     
@@ -41,7 +42,7 @@
       //add paris map 1814
       var map = L.map('map', {
         center: [48.840, 2.344],
-        zoom: 13,
+        zoom: 15,
         layers: [streets,satellite]
         });
       
@@ -81,6 +82,7 @@ var illusions_strts = "https://gis.uspatial.umn.edu/arcgis/rest/services/Librari
   var neighborhoods = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/sites_quartiers/MapServer";
 
   //Adding character lines and points to map
+
     var neighborhoods_info = L.esri.dynamicMapLayer(neighborhoods, {
     opacity : 0.20,
     layers: [2]
@@ -119,7 +121,8 @@ var illusions_strts = "https://gis.uspatial.umn.edu/arcgis/rest/services/Librari
       return{
         weight:5,
         color: "#26b5ae",
-        opacity: 1
+        opacity: 1,
+        dashArray: 5
       }
      },
       onEachFeature: function (feature, layer) {
@@ -154,7 +157,7 @@ var illusions_strts = "https://gis.uspatial.umn.edu/arcgis/rest/services/Librari
                     color: "white",
                     weight: 1,
                     opacity: 1,
-                    fillOpacity: 1
+                    fillOpacity: 1   
                 });
             },
     onEachFeature: function (feature, layer) {
@@ -170,7 +173,8 @@ var illusions_strts = "https://gis.uspatial.umn.edu/arcgis/rest/services/Librari
       return{
         weight:4,
         color: "#650f3c",
-        opacity: 1
+        opacity: 1,
+        dashArray: 5
       }
      },
       onEachFeature: function (feature, layer) {
@@ -205,7 +209,8 @@ var chagrin2 = L.esri.featureLayer(chagrin_strts,{
       return{
         weight:4,
         color: "#212c95",
-        opacity: 1
+        opacity: 1,
+        dashArray: 5
       }
      },
 
@@ -234,14 +239,13 @@ var paris_sites = L.esri.featureLayer(paris,{
     }
   }).addTo(map);
 
-
   //what shows up on controller
 	var groupOverlay = {
-	"Eugène de Rastignac, Father Goriot": goriot_all,
-	"Lucien de Rubempré, Lost Illusions": illusions_all,
-  "Raphaël de Valentin, The Magic Skin": chagrin_all,
-  "Paris Attractions": paris_sites,
-  "Faubourgs": neighborhoods_info
+  "<img src='goriot.png' style=center height=15 padding-top=1>  Eugène de Rastignac, Father Goriot": goriot_all,
+	"<img src='lost.png' style=center height=15 padding-top=1>  Lucien de Rubempré, Lost Illusions": illusions_all,
+  "<img src='chagrin.png' style=center height=15 padding-top=1>  Raphaël de Valentin, The Magic Skin": chagrin_all,
+  "<img src='paris.png' style=center height=12 padding-top=1>  Paris Attractions": paris_sites,
+  "<img src='neighborhoods.png' style=center height=12 padding-top=1>  Faubourgs": neighborhoods_info
 	}
 
   //adding controller to map
@@ -251,105 +255,6 @@ var paris_sites = L.esri.featureLayer(paris,{
   }).addTo(map);
 
   neighborhoods_info.bringToBack();
-  
-  //START OF POPUPS
- //  chagrin_all.bindPopup(function (error, featureCollection) {
- //    var chagrin;
- //    // user click on track layer
- //    if (featureCollection.features.length === 1){
- //      chagrin= featureCollection.features[0].properties;
- //      console.log('1: '+featureCollection.features.length)
- //      popupText = "<center><b>" +
- //            "Location: " + chagrin.geo + "</b><br>" +
- //            "Quote: " + chagrin.plot + "</center>";
- //    }
- //   // user click on storm position
- //    else {
- //      console.log('2: '+featureCollection.features.length)
- //      chagrin = featureCollection.features[1].properties;
-      
- //    }
-
- //    if(error || featureCollection.features.length === 0) {
- //      return false;
- //    } else {
- //      return popupText;
- //    }
- //  });
-
-  
-
- //  goriot_all.bindPopup(function (error, featureCollection) {
- //    var goriot;
- //    // user click on track layer
- //    if (featureCollection.features.length === 1){
- //      goriot= featureCollection.features[0].properties;
- //      console.log('1: '+featureCollection.features.length)
- //      popupText = "<center><b>" +
- //            "Location: " + goriot.geo + "</b><br>" +
- //            "Quote: " + goriot.plot + "</center>";
- //    }
-
- //    // user click on storm position
- //    else {
- //      console.log('2: '+featureCollection.features.length)
- //      goriot = featureCollection.features[1].properties;
-      
- //    }
- //    if(error || featureCollection.features.length === 0) {
- //      return false;
- //    } else {
- //      return popupText;
- //    }
- //  });
-
- // illusions_all.bindPopup(function (error, featureCollection) {
- //    var illusions;
- //    // user click on track layer
- //    if (featureCollection.features.length === 1){
- //      illusions= featureCollection.features[3,6,10,13,17,21].properties;
- //      console.log('1: '+featureCollection.features.length)
- //      popupText = "<center><b>" +
- //            "Location: " + illusions.geo + "</b><br>" +
- //            "Quote: " + illusions.plot + "</center>";
- //    }
-
- //    // user click on storm position
- //    else {
- //      console.log('2: '+featureCollection.features.length)
- //      illusions= featureCollection.features[1].properties;
- //      popupText = null
- //    }
- //    if(error || featureCollection.features.length === 0) {
- //      return false;
- //    } else {
- //      return popupText;
- //    }
- //  });
-
- // paris_sites.bindPopup(function (error, featureCollection) {
- //    var paris;
- //    // user click on track layer
- //    if (featureCollection.features.length === 1){
- //      paris= featureCollection.features[0].properties;
- //      console.log('1: '+featureCollection.features.length)
- //      popupText = "<center><b>" +
- //            "Location: " + paris.geo + "</b><br>" +
- //            paris.info + "<br>"+"Acknowledgements: "+"</br>" + "</center>";
- //    }
- //   // user click on storm position
- //    else {
- //      console.log('2: '+featureCollection.features.length)
- //      paris = featureCollection.features[1].properties;
-      
- //    }
-
- //    if(error || featureCollection.features.length === 0) {
- //      return false;
- //    } else {
- //      return popupText;
- //    }
- //  });
 
   neighborhoods_info.bindPopup(function (error, featureCollection) {
     var neighborhoods;
@@ -374,88 +279,17 @@ var paris_sites = L.esri.featureLayer(paris,{
       return popupText;
     }
   });
+// var graphicScale = L.control.graphicScale({
+//     doubleLine: true,
+//     fill: 'hollow',
+//         showSubunits: true
+//   }).addTo(map);
 
-  // First Attempt at CHracters and Time slider....
-  // var chagrin = "http://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/characters_zoomLevels_test1/MapServer";
+L.control.scale(map).addTo(map);
 
-  // var goriot = "http://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/characters_zoomLevels_test1/MapServer";
-
-  // var illusions = "http://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/characters_zoomLevels_test1/MapServer";
-
-  // var chagrin_all = L.esri.dynamicMapLayer(chagrin, {
-  //   opacity : 0.99,
-  //   layers: [1,2,8,9,15,16],
-  // }).addTo(map);
-
-  // var goriot_all = L.esri.dynamicMapLayer(goriot, {
-  //   opacity : 0.99,
-  //   layers: [3,4,10,11,17,18],
-  // }).addTo(map);
-
-  // goriot_all.query()
-  //   .layer(3)
-  //   .run(function(error,featureCollection,response){
-  //     var geoj = new L.geoJson(featureCollection);
-  //       var sliderControl = L.control.sliderControl({
-  //        position: "topright",
-  //        layer: geoj,
-  //        follow: true
-  //      });
-  //        map.addControl(sliderControl);
-  //   sliderControl.startSlider();
-  // });
-
-    
-  // var illusions_all = L.esri.dynamicMapLayer(goriot, {
-  //   opacity : 0.99,
-  //   layers: [5,6,12,13,19,20],
-  // }).addTo(map);
-
-  // var groupOverlay = {
-  //   "Chagrin": chagrin_all,
-  //   "Goriot": goriot_all,
-  //   "Illusions": illusions_all
-  // }
-
-  //   new L.control.layers(null, groupOverlay,{
-  //    position: 'topleft',
-  //    }).addTo(map);
-  
-  // // Time Slider
-
-   
-
-    // extractTimestamp: function(time, options) {
-    //     if (options.isEpoch) {
-    //         time = (new Date(parseInt(time))).toString(); // this is local time
-    //     }
-    //     return time.substr(options.startTimeIdx, options.startTimeIdx + options.timeStrLength);
-    // },
-    //    initialize: function (options) {
-    //     L.Util.setOptions(this, options);
-    //     this._layer = this.options.layer;
 
 
 </script> 
 
 </body>
 </html>
- <!-- // var raphael = [
-      // ["la Seine",48.848411,2.360964],
-      // ["Les théâtres de vaudeville",48.871354,2.33376],
-      // ["Théâtre de l’Ambigu-Comique",48.867,2.3651],
-      // ["la rue Saint-Honoré",48.865289,2.331211]
-      // ];
-
-      // // adding custom icon as Marker     
-      // var chagrin = L.icon({
-      //   iconUrl: 'chagrin.png',
-      //   iconSize:     [80, 50], // size of the icon
-      //   iconAnchor:   [10, 10], // point of the icon which will correspond to marker's location
-      //   popupAnchor:  [10, -5] // point from which the popup should open relative to the iconAnchor
-      // });
-    
-      // raphael = L.marker([48.864632,2.337341],
-      // {icon: chagrin}).addTo(map)
-   //          .bindPopup("<strong>Medium Rocket!</strong>");
- -->
