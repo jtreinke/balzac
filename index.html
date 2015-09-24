@@ -23,7 +23,7 @@
     
   <body>
     <div id="title">Mapping Balzac's Paris</div>
-    <div style="z-index:1000000000;position:absolute;top:0;right:0;font-size:20px;"id="paris"></div>
+    <div id="paris"></div>
   
     <div id="map"></div>
     <div id='control' class='ui-opacity'>
@@ -256,18 +256,50 @@ var chagrin2 = L.esri.featureLayer(chagrin_strts,{
 
 
 var paris_sites = L.esri.featureLayer(paris,{
-    onEachFeature: function(feature, layer){
-      var popup_content = "<center><b>" +
-         "Location: " + feature.properties.geo + "</b><br>" +
-         feature.properties.info + "<br>"+"Acknowledgements: "+"</br>" + "</center>";
 
+    onEachFeature: function(feature, layer){
+      var popup_content = "<b>" +
+         "Location: " + feature.properties.geo + "</b><br>" +
+         feature.properties.info + "<br>"+"Acknowledgements: "+"</br>";
+      var paris = $("#paris");
       layer.on("mouseover", function(e){
-        $("#paris").append(popup_content);
+          
+
+          paris.innerHTML = popup_content;
+          var pageX = e.originalEvent.pageX;
+          var pageY = e.originalEvent.pageY;
+          
+          var width = $("body").width();
+          
+          if (pageX === undefined) {
+            pageX = e.originalEvent.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+            pageY = e.originalEvent.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+          }
+          
+          paris.css("top",(pageY-15)+"px");
+          
+          if (width - pageX > 230){
+        
+            paris.css("left",(pageX+15)+"px");
+          }
+          
+          else {
+            
+            paris.css("left",(pageX-220)+"px");
+          }
+      
+        paris.append(popup_content);
+        paris.css("opacity",1);
+
+
       });
 
 
       layer.on("mouseout", function(e){
-        $("#paris").empty();
+        paris.empty();
+        paris.css("opacity",0);
+        
+
       })
     }
   }).addTo(map);
