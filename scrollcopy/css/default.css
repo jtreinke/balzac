@@ -10,7 +10,7 @@ body {
 }
 
 img{
-	height:800px;
+	height:900px;
 	z-index: 1;
 }
 #container{
@@ -46,6 +46,7 @@ margin-left: 0%;
 list-style-type: none;
 text-align:center;
 position:fixed;
+position:center;
 z-index: 6;
 }
 
