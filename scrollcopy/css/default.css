@@ -1,7 +1,20 @@
 body {
 	height: 3000px;
-	background-color:#000000;
+	background-color:#191d26;
 	margin: 0 0;
+
+}
+
+@media (min-width: 698px) and (max-width: 1000px) {
+  #project {
+    top:15%;
+  }
+}
+
+@media (max-width: 697px) {
+  #project {
+    top:17%;
+  }
 }
 
 #update {
@@ -41,12 +54,13 @@ img{
 {
 padding-top:3px;
 text-transform: capitalize;
-margin-top: -1%;
-margin-left: 0%;
+top:0;
+left:0;
+right:0;
+margin:auto;
 list-style-type: none;
 text-align:center;
 position:fixed;
-position:center;
 z-index: 6;
 }
 
@@ -78,6 +92,37 @@ a:active{color:#FF0000;}
 #ack{
   font-size: 25px;
 }
+#project{
+  height:900px;
+  width:1000px;
+  position: fixed;
+      top: 12%;
+      left: 10%;
+     
+}
+#text{
+  float:left;
+   width:100%;
+   padding:5px;
+  -webkit-column-count: 3; /* Chrome, Safari, Opera */
+    -moz-column-count: 3; /* Firefox */
+    column-count: 3;
+    -webkit-column-gap: 10px; /* Chrome, Safari, Opera */
+    -moz-column-gap: 10px; /* Firefox */
+    column-gap: 10px;
+    -webkit-column-rule: 1px solid lightblue; /* Chrome, Safari, Opera */
+    -moz-column-rule: 1px solid lightblue; /* Firefox */
+    column-rule: 1px solid lightblue;
+    color:white;
+    font-size:14px;
+   
+}
+/*#text{
+  width:100px;
+  height:900px;
+  background-color:white;
+
+}*/
 /*
 #eugene{
   margin-left:100px;

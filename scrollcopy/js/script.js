@@ -3,7 +3,7 @@ $(document).scroll(function(){
 	var y = $(document).scrollTop();
 	$("#update").html(y);
 
-	if (y > 100) {
+	if (y > 0) {
 		$("#one").fadeIn();
 	}
 	else {
