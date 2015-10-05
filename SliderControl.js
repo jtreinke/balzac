@@ -21,6 +21,18 @@ L.Control.SliderControl = L.Control.extend({
     initialize: function (options) {
         L.Util.setOptions(this, options);
         this._layer = this.options.layer;
+        this.goriotIcon = L.icon({
+            iconUrl: 'fatherGoriot_fleurDeLys.png',
+            iconSize: [40, 40]
+        });
+        this.lostIcon = L.icon({
+            iconUrl: 'lostIllusions_fleurDeLys.png',
+            iconSize: [40, 40]
+        });
+        this.chagrinIcon = L.icon({
+            iconUrl: 'chagrin_fleurDeLys.png',
+            iconSize: [40, 40]
+        });
 
     },
 
@@ -118,6 +130,7 @@ L.Control.SliderControl = L.Control.extend({
     },
 
     startSlider: function () {
+        var that = this;
         _options = this.options;
         _extractTimestamp = this.extractTimestamp;
         var index_start = _options.minValue;
@@ -197,7 +210,11 @@ L.Control.SliderControl = L.Control.extend({
 
                     
                     var i;
+                    var balzac_marker;
+                    var plot_number;
                     // clear markers
+
+
                     for (i = _options.minValue; i <= _options.maxValue; i++) {
                         if(_options.markers[i]) map.removeLayer(_options.markers[i]);
                     }
@@ -212,6 +229,28 @@ L.Control.SliderControl = L.Control.extend({
                     }else if(_options.follow){
                         for (i = ui.value - _options.follow + 1; i <= ui.value ; i++) {
                             if(_options.markers[i]) {
+                                balzac_marker = _options.markers[i];
+                                plot_number = balzac_marker.feature.properties.plot;
+                                if (plot_number > 0 && plot_number < 50){
+                                    //goriot
+                                    balzac_marker.setIcon(that.goriotIcon);
+                                }
+            
+                                else if (plot_number >= 61 && plot_number <= 223){
+                                    //lost illusions
+                                    balzac_marker.setIcon(that.lostIcon);
+                                }
+                                                        
+
+                                else if (plot_number >= 315 && plot_number <= 427){
+                                    //magic skin
+                                    balzac_marker.setIcon(that.chagrinIcon);
+                                }
+                                    
+
+                                
+                                    
+
                                 map.addLayer(_options.markers[i]);
                                 fg.addLayer(_options.markers[i]);
                             }
