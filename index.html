@@ -67,20 +67,20 @@
       
       
 //Connecting lines and points from the U-Spatial ArcGIS Server
-    var chagrin_pts = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/characterPoints_test2/MapServer/8";
-    var chagrin_strts = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/characterPoints_test2/MapServer/12";
-    var goriot_pts = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/characterPoints_test2/MapServer/9";
-    var goriot_strts = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/characterPoints_test2/MapServer/11";
-    var illusions_pts = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/characterPoints_test2/MapServer/10";
-    var illusions_strts = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/characterPoints_test2/MapServer/13";
-    var paris = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/sites_quartiers/MapServer/0";
-    var neighborhoods = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/sites_quartiers/MapServer";
+    var chagrin_pts = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/balzac_final1/MapServer/0";
+    var chagrin_strts = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/balzac_final1/MapServer/1";
+    var goriot_pts = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/balzac_final1/MapServer/2";
+    var goriot_strts = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/balzac_final1/MapServer/3";
+    var illusions_pts = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/balzac_final1/MapServer/4";
+    var illusions_strts = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/balzac_final1/MapServer/5";
+    var paris = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/balzac_final1/MapServer/6";
+    var neighborhoods = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/balzac_final1/MapServer/7";
 
   //Adding character lines and points to map
 
     var neighborhoods_info = L.esri.dynamicMapLayer(neighborhoods, {
         opacity : 0.20,
-        layers: [2]
+        layers: [7]
     });
 
     var onEachFeaturePopup = function (feature, layer) {
