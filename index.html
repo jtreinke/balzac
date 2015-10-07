@@ -45,8 +45,8 @@
 
       //add paris map 1814
       var map = L.map('map', {
-        center: [48.840, 2.344],
-        zoom: 15,
+        center: [48.854042, 2.349486000000013],
+        zoom: 13,
         layers: [satellite],
         maxZoom:17
         });
@@ -77,10 +77,18 @@
     var paris = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/balzac_final1/MapServer/6";
     var neighborhoods = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/balzac_final1/MapServer/7";
 
-    //paris sites. don't move below character pts/lines!
-    var paris_sites = L.esri.featureLayer(paris,{
-
-        onEachFeature: function(feature, layer){
+    //paris sites. don't move below character pts/lines! (name of attractionsbalzac_fixedattractions)
+     var paris_sites = L.esri.featureLayer(paris,{
+        // onEachFeature: function(feature, layer){
+       style:function (feature) {
+       return{
+        fillColor: "#99ff00",
+        color:'#99ff00',
+        opacity: 999,
+        weight:1,
+      }
+     },
+          onEachFeature: function(feature, layer){
           var popup_content = "<b>" +
              "Location: " + feature.properties.geo + "</b><br>" +
              feature.properties.info + "<br>"+"Source: " + feature.properties.Ack + "</br>";
@@ -127,10 +135,8 @@
         }
       }).addTo(map);
 
-
+ 
   //Adding character lines and points to map
-
-
 
     var onEachNeighborhood = function (feature, layer) {
         var content;
@@ -138,9 +144,6 @@
         content = "<center><b>" +
           feature.properties.L_AROFF + "</b></center>";
         layer.bindPopup(content);
-
-
-
 
     };
 
@@ -168,7 +171,7 @@
 
             case "Faubourg Saint-Marcel":
               return {
-              "fillColor" : "red",
+              "fillColor" : "blue",
               "color" : "red"
               }
 
@@ -320,7 +323,7 @@ var chagrin2 = L.esri.featureLayer(chagrin_strts,{
                            layer: geoj,
                            follow: true,
                            slideAttribute: "plot",
-                           displayAttribute: "info",
+                           displayAttribute: "time",
                            alwaysShowDate: true,
                            noTime: true
                       });
@@ -341,7 +344,7 @@ var chagrin2 = L.esri.featureLayer(chagrin_strts,{
     "<img src='goriot.png' style=center height=15 padding-top=1>  Eugène de Rastignac, Father Goriot": goriot_all,
   	"<img src='lost.png' style=center height=15 padding-top=1>  Lucien de Rubempré, Lost Illusions": illusions_all,
     "<img src='chagrin.png' style=center height=15 padding-top=1>  Raphaël de Valentin, The Magic Skin": chagrin_all,
-    "<img src='paris.png' style=center height=12 padding-top=1>  Paris Attractions": paris_sites,
+    "<img src='parisatt.png' style=center height=12 padding-top=1>  Paris Attractions": paris_sites,
     "<img src='neighborhoods.png' style=center height=12 padding-top=1>  Faubourgs": neighborhoods_info
 	}
 
