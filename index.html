@@ -68,14 +68,14 @@
       
       
 //Connecting lines and points from the U-Spatial ArcGIS Server
-    var chagrin_pts = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/balzac_final1/MapServer/0";
-    var chagrin_strts = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/balzac_final1/MapServer/1";
-    var goriot_pts = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/balzac_final1/MapServer/3";
-    var goriot_strts = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/balzac_final1/MapServer/2";
-    var illusions_pts = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/balzac_final1/MapServer/4";
-    var illusions_strts = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/balzac_final1/MapServer/5";
-    var paris = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/balzac_final1/MapServer/6";
-    var neighborhoods = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/balzac_final1/MapServer/7";
+    var chagrin_pts = "http:gis.uspatial.umn.edu/arcgis/rest/services/Libraries/balzac_characters_paris_attractions_arrondissements/MapServer/0";
+    var chagrin_strts = "http://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/balzac_characters_paris_attractions_arrondissements/MapServer/1";
+    var goriot_pts = "http://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/balzac_characters_paris_attractions_arrondissements/MapServer/2";
+    var goriot_strts = "http://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/balzac_characters_paris_attractions_arrondissements/MapServer/3";
+    var illusions_pts = "http://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/balzac_characters_paris_attractions_arrondissements/MapServer/4";
+    var illusions_strts = "http://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/balzac_characters_paris_attractions_arrondissements/MapServer/5";
+    var paris = "http://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/balzac_fixedattractions/MapServer/0";
+    var neighborhoods = "http://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/balzac_characters_paris_attractions_arrondissements/MapServer/7";
 
     //paris sites. don't move below character pts/lines! (name of attractionsbalzac_fixedattractions)
      var paris_sites = L.esri.featureLayer(paris,{
