@@ -40,7 +40,7 @@
        // });
      
       // adding Basemaps from ESRI
-      var streets = L.esri.basemapLayer("Topographic");
+      //var streets = L.esri.basemapLayer("Topographic");
       var satellite = L.esri.basemapLayer("Imagery");
 
       var parisMapUrl = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/balzac_Reduction_FrenchMap_tiff/MapServer";
@@ -55,7 +55,7 @@
       var parisMap = L.esri.tiledMapLayer(parisMapUrl).addTo(map);
 
       var baseMaps = {
-        "Streets":streets,
+        //"Streets":streets,
         "Satellite Imagery": satellite
         };
       
