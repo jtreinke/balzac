@@ -33,14 +33,15 @@
    
    <script>
       // adding Streets layer from mapbox                     
-      //var satellite = L.tileLayer('http://{s}.tiles.mapbox.com/v3/jtreinke.mo6k9ic3/{z}/{x}/{y}.png', {
+      var satellite = L.tileLayer ();
+      //('http://{s}.tiles.mapbox.com/v3/jtreinke.mo6k9ic3/{z}/{x}/{y}.png', {
        // attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>',
        // maxZoom: 18
        // });
      
       // adding Basemaps from ESRI
       var streets = L.esri.basemapLayer("Topographic");
-     // var satellite = L.esri.basemapLayer("Imagery");
+      var satellite = L.esri.basemapLayer("Imagery");
 
       var parisMapUrl = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/balzac_Reduction_FrenchMap_tiff/MapServer";
 
