@@ -1,0 +1,387 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>-->
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"/><!--JQuery-ui.css (for time slider)-->
+  <link href='https://api.tiles.mapbox.com/mapbox.js/v2.2.1/mapbox.css' rel='stylesheet' />
+  <link href="sheets.css" rel="stylesheet">
+  <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script><!-- JQuery -->
+  <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script><!--JQuery-ui.js (for time slider)-->
+  <script src='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.js'></script>
+  <!-- <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>--> 
+  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.4/esri-leaflet.js"></script> <!-- ESRI Basemaps -->
+  <!--<script src="leaflet.geocsv.js"></script>--><!--for adding markers, converting csv to geojson-->
+  <!--<script src="leaflet_map.js"></script>-->
+  <script src="SliderControl.js"></script>
+  
+  <title>Mapping Balzac's Paris</title>
+  </head>
+    
+  <body>
+    <div id="title">Mapping Balzac's Paris</div>
+    <div id="paris"></div>
+  
+    <div id="map"></div>
+    <div id='control' class='ui-opacity'>
+    <div id='handle' class='handle'></div>
+    </div>
+    <div id="scale"></div>
+   
+   <script>
+      // adding Streets layer from mapbox                     
+      //var satellite = L.tileLayer ();
+      //('http://{s}.tiles.mapbox.com/v3/jtreinke.mo6k9ic3/{z}/{x}/{y}.png', {
+       // attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>',
+       // maxZoom: 18
+       // });
+     
+      // adding Basemaps from ESRI
+      var streets = L.esri.basemapLayer("Topographic");
+      var satellite = L.esri.basemapLayer("Imagery");
+
+      var parisMapUrl = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/balzac_Reduction_FrenchMap_tiff/MapServer";
+
+      //add paris map 1814
+      var map = L.map('map', {
+        center: [48.840, 2.344],
+        zoom: 15,
+        layers: [streets]
+        });
+      
+      var parisMap = L.esri.tiledMapLayer(parisMapUrl).addTo(map);
+
+      var baseMaps = {
+        "Streets":streets,
+        "Satellite Imagery": satellite
+        };
+      
+      var overlays = {
+        "Balzac Map": parisMap
+        }; 
+      
+    L.control.layers(baseMaps, overlays, {
+        position: 'topleft'
+    }).addTo(map);
+      
+      
+//Connecting lines and points from the U-Spatial ArcGIS Server
+    var chagrin_pts = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/characterPoints_test2/MapServer/8";
+    var chagrin_strts = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/characterPoints_test2/MapServer/12";
+    var goriot_pts = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/characterPoints_test2/MapServer/9";
+    var goriot_strts = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/characterPoints_test2/MapServer/11";
+    var illusions_pts = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/characterPoints_test2/MapServer/10";
+    var illusions_strts = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/characterPoints_test2/MapServer/13";
+    var paris = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/sites_quartiers/MapServer/0";
+    var neighborhoods = "https://gis.uspatial.umn.edu/arcgis/rest/services/Libraries/sites_quartiers/MapServer";
+
+  //Adding character lines and points to map
+
+    var neighborhoods_info = L.esri.dynamicMapLayer(neighborhoods, {
+        opacity : 0.20,
+        layers: [2]
+    });
+
+    var onEachFeaturePopup = function (feature, layer) {
+        var content; 
+        if (feature.properties.info){
+          content = "<center><b>" +
+             feature.properties.geo + "</b><br>" +
+             feature.properties.info + "<br>"+"Acknowledgements: "+"</br>" + "</center>";
+        }
+        else {
+          content = "<center><b>" +
+             feature.properties.geo + "</b><br>" +
+             "Acknowledgements: "+"</br>" + "</center>";
+        }
+        layer.bindPopup(content);
+    };
+
+  var goriot = L.esri.featureLayer(goriot_pts,{
+    pointToLayer: function (feature, latlng) {                    
+        return new L.CircleMarker(latlng, {
+            radius: 7,
+            fillColor: "#26b5ae",
+            color: "white",
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 1
+        });
+    },
+    onEachFeature: onEachFeaturePopup
+  }).addTo(map);
+
+  var goriot2 = L.esri.featureLayer(goriot_strts,{
+      style:function (feature) {
+      return{
+        weight:5,
+        color: "#26b5ae",
+        opacity: 1,
+        dashArray: 5
+      }
+     },
+      onEachFeature: onEachFeaturePopup
+     
+    }).addTo(map);
+    
+  var goriot_all = L.layerGroup([goriot, goriot2])
+  .addTo(map);
+
+  var plot_points = [];
+
+ 
+
+    
+
+  var illusions = L.esri.featureLayer(illusions_pts,{
+     pointToLayer: function (feature, latlng) {                    
+                return new L.CircleMarker(latlng, {
+                    radius: 7,
+                    fillColor: "#650f3c",
+                    color: "white",
+                    weight: 1,
+                    opacity: 1,
+                    fillOpacity: 1   
+                });
+            },
+    onEachFeature: onEachFeaturePopup
+
+  }).addTo(map);
+
+  var illusions2 = L.esri.featureLayer(illusions_strts,{
+      style:function (feature) {
+      return{
+        weight:4,
+        color: "#650f3c",
+        opacity: 1,
+        dashArray: 5
+      }
+     },
+      onEachFeature: onEachFeaturePopup
+    }).addTo(map);
+
+   var illusions_all = L.layerGroup([illusions, illusions2])
+  .addTo(map);
+
+var chagrin = L.esri.featureLayer(chagrin_pts,{
+   pointToLayer: function (feature, latlng) {                    
+                return new L.CircleMarker(latlng, {
+                    radius: 7,
+                    fillColor: "#212c95",
+                    color: "white",
+                    weight: 1,
+                    opacity: 1,
+                    fillOpacity: 1
+                });
+            },
+   onEachFeature: onEachFeaturePopup 
+  }).addTo(map);
+  
+var chagrin2 = L.esri.featureLayer(chagrin_strts,{
+     style:function (feature) {
+      return{
+        weight:4,
+        color: "#212c95",
+        opacity: 1,
+        dashArray: 5
+      }
+     },
+
+     onEachFeature: onEachFeaturePopup
+            
+    }).addTo(map);
+
+   var chagrin_all = L.layerGroup([chagrin, chagrin2])
+  .addTo(map);
+
+
+ goriot.query()
+    .run(function(error,featureCollection,response){
+        featureCollection.features = featureCollection.features.filter(function(feature){
+            if (feature.properties.plot){
+                return feature;
+            }
+        });
+
+        plot_points = plot_points.concat(featureCollection.features);
+
+         illusions.query()
+            .run(function(error,featureCollection,response){
+                featureCollection.features = featureCollection.features.filter(function(feature){
+                    if (feature.properties.plot){
+                        return feature;
+                    }
+                });
+
+                plot_points = plot_points.concat(featureCollection.features);
+
+                chagrin.query()
+                  .run(function(error,featureCollection,response){
+                      featureCollection.features = featureCollection.features.filter(function(feature){
+                          if (feature.properties.plot){
+                              return feature;
+                          }
+                      });
+
+                      plot_points = plot_points.concat(featureCollection.features);
+
+                      var geoj = new L.geoJson(plot_points);
+                      var sliderControl = L.control.sliderControl({
+                           position: "topright",
+                           layer: geoj,
+                           follow: true,
+                           slideAttribute: "plot",
+                           displayAttribute: "time",
+                           alwaysShowDate: true,
+                           noTime: true
+                      });
+
+                      map.addControl(sliderControl);
+                      sliderControl.startSlider();
+
+                    
+                });
+              
+          });
+      
+  });
+
+
+
+ 
+
+
+
+
+
+var paris_sites = L.esri.featureLayer(paris,{
+
+    onEachFeature: function(feature, layer){
+      var popup_content = "<b>" +
+         "Location: " + feature.properties.geo + "</b><br>" +
+         feature.properties.info + "<br>"+"Acknowledgements: "+"</br>";
+      var paris = $("#paris");
+      layer.on("mouseover", function(e){
+          
+
+          paris.innerHTML = popup_content;
+          var pageX = e.originalEvent.pageX;
+          var pageY = e.originalEvent.pageY;
+          
+          var width = $("body").width();
+          
+          if (pageX === undefined) {
+            pageX = e.originalEvent.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+            pageY = e.originalEvent.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+          }
+          
+          paris.css("top",(pageY-15)+"px");
+          
+          if (width - pageX > 230){
+        
+            paris.css("left",(pageX+15)+"px");
+          }
+          
+          else {
+            
+            paris.css("left",(pageX-220)+"px");
+          }
+      
+        paris.append(popup_content);
+        paris.css("opacity",1);
+
+
+      });
+
+
+      layer.on("mouseout", function(e){
+        paris.empty();
+        paris.css("opacity",0);
+        
+
+      })
+    }
+  }).addTo(map);
+
+
+  //what shows up on controller
+	var groupOverlay = {
+    "<img src='goriot.png' style=center height=15 padding-top=1>  Eugène de Rastignac, Father Goriot": goriot_all,
+  	"<img src='lost.png' style=center height=15 padding-top=1>  Lucien de Rubempré, Lost Illusions": illusions_all,
+    "<img src='chagrin.png' style=center height=15 padding-top=1>  Raphaël de Valentin, The Magic Skin": chagrin_all,
+    "<img src='paris.png' style=center height=12 padding-top=1>  Paris Attractions": paris_sites,
+    "<img src='neighborhoods.png' style=center height=12 padding-top=1>  Faubourgs": neighborhoods_info
+	}
+
+  //adding controller to map
+  new L.control.layers(null, groupOverlay,{
+    position: 'topright',
+    collapsed: false
+  }).addTo(map);
+
+  neighborhoods_info.bringToBack();
+
+  neighborhoods_info.bindPopup(function (error, featureCollection) {
+    var neighborhoods;
+    // user click on track layer
+    if (featureCollection.features.length === 1){
+      neighborhoods= featureCollection.features[0].properties;
+      console.log('1: '+featureCollection.features.length)
+      popupText = "<center><b>" +
+            "Arrondissement/Quartier: " + neighborhoods.L_AROFF + "</b><br>" +
+           "<b>"+"District number: "+"</b>"+ neighborhoods.L_AR + "</center>";
+    }
+   // user click on storm position
+    else {
+      console.log('2: '+featureCollection.features.length)
+      neighborhoods = featureCollection.features[1].properties;
+      
+    }
+
+    if(error || featureCollection.features.length === 0) {
+      return false;
+    } else {
+      return popupText;
+    }
+  });
+
+var overlay = parisMap;
+var handle = document.getElementById('handle'),
+    start = false,
+    startTop;
+
+  document.onmousemove = function(e) {
+    if (!start) return;
+    // Adjust control.
+    handle.style.top = Math.max(-5, Math.min(195, startTop + parseInt(e.clientY, 10) - start)) + 'px';
+    // Adjust opacity.
+    overlay.setOpacity(1 - (handle.offsetTop / 200));
+};
+
+handle.onmousedown = function(e) {
+    // Record initial positions.
+    start = parseInt(e.clientY, 10);
+    startTop = handle.offsetTop - 5;
+    return false;
+};
+
+document.onmouseup = function(e) {
+    start = null;
+};
+// var graphicScale = L.control.graphicScale({
+//     doubleLine: true,
+//     fill: 'hollow',
+//         showSubunits: true
+//   }).addTo(map);
+
+L.control.scale().addTo(map);
+
+
+
+</script> 
+
+</body>
+</html>
